@@ -5,13 +5,12 @@
     font-style: normal;
 }
 
-/* 답변 목록 화면 본문: 874 - 70 - 85 = 719 */
-.reply-section {
+/* 고민 목록 화면 본문: 874 - 70 - 85 = 719 */
+.list-section {
     position: relative;
     width: 100%;
     height: calc(874px - 70px - 85px);
-    padding: 58px 16px 16px;
-    box-sizing: border-box;
+    padding: 44px 16px 0px;
 
     display: flex;
     flex-direction: column;
@@ -76,8 +75,8 @@
     line-height: 100%;
 }
 
-.reply-page-title {
-    margin: 0 0 27px;
+.list-page-title {
+    margin: 0 0 22px;
 
     color: #2B2D54;
     text-align: center;
@@ -87,34 +86,28 @@
     line-height: 120%;
 }
 
-/* 리스트 */
-.reply-list-wrap {
+.worry-list-wrap {
     width: 370px;
-    flex: 1;
-    min-height: 0;
+    height: 482px;
+    flex-shrink: 0;
 
     display: flex;
     flex-direction: column;
     gap: 10px;
 
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding-bottom: 4px;
-
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    overflow: hidden;
+    padding-bottom: 0;
 }
 
-.reply-list-wrap::-webkit-scrollbar {
+.worry-list-wrap::-webkit-scrollbar {
     display: none;
 }
 
 /* 카드 본체 */
-.reply-card {
+.worry-card {
     width: 370px;
     height: 72px;
     flex-shrink: 0;
-    box-sizing: border-box;
 
     display: flex;
     align-items: center;
@@ -128,7 +121,7 @@
     cursor: pointer;
 }
 
-.reply-card:hover {
+.worry-card:hover {
     background: #9F907E;
 }
 
@@ -151,19 +144,25 @@
     color: inherit;
 }
 
-/* 왼쪽 텍스트 */
-.reply-text {
-    width: 170px;
+.worry-card a,
+.worry-card a:visited,
+.worry-card a:hover,
+.worry-card a:active,
+.worry-card a:focus {
+    text-decoration: none;
+    color: inherit;
+}
 
+.worry-text {
+    width: 170px;
     display: flex;
     flex-direction: column;
     gap: 2px;
-
     min-width: 0;
 }
 
-.reply-title {
-    width: 120px;
+.list-title {
+    width: 86px;
 
     color: #000;
     font-family: Pretendard, sans-serif;
@@ -177,9 +176,7 @@
     text-decoration: none;
 }
 
-.reply-sub {
-    width: 145px;
-
+.list-sub {
     color: #868484;
     font-family: Pretendard, sans-serif;
     font-size: 11px;
@@ -192,96 +189,89 @@
     text-decoration: none;
 }
 
-/* 공개 여부 눈 아이콘 영역 */
-.open-box {
-    position: absolute;
-    right: 145px;
-    top: 50%;
-    transform: translateY(-50%);
-
-    width: 30px;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1px;
-
-    z-index: 30;
-}
-
-.open-icon {
-    width: 18px;
-    height: 18px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    color: #C8C1BA;
-}
-
-.open-icon.active svg path {
-    stroke: #3A3A3A;
-}
-
-.open-icon svg {
-    display: block;
-    width: 18px;
-    height: 18px;
-}
-
-.open-text {
+.list-time {
     color: #868484;
     font-family: Pretendard, sans-serif;
-    font-size: 7px;
+    font-size: 8px;
     font-weight: 400;
     line-height: 150%;
     white-space: nowrap;
 }
 
-/* 오른쪽 만족/불만족 박스 */
-.reply-meta {
+.list-meta {
     position: absolute;
     right: 16px;
     top: 50%;
     transform: translateY(-50%);
 
-    width: 120px;
+    width: 141px;
     height: 52px;
 
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 14px;
+    gap: 6px;
 
     background: #FFFFFF;
     border-radius: 10px;
     z-index: 30;
 }
 
-.reaction-icon {
-    width: 28px;
-    height: 32px;
+.stamp-icon {
+    width: 31px;
+    height: 35px;
 
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
 
-    color: #C89B25;
+    flex-shrink: 0;
 }
 
-.reaction-icon svg {
-    width: 21px;
-    height: 25px;
+.stamp-icon img {
+    width: 31px;
+    height: 35px;
+
     display: block;
+    object-fit: contain;
+    transform: rotate(-4.66deg);
 }
 
-.like-icon.active {
-    color: #AE4959;
+.stamp-count,
+.answer-count {
+    color: #000;
+    font-family: Pretendard, sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1;
 }
 
-.dislike-icon.active {
-    color: #5B7DBE;
+.answer-icon {
+    position: relative;
+    width: 34px;
+    height: 31px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.answer-icon svg {
+    position: absolute;
+    inset: 0;
+    width: 34px;
+    height: 31px;
+}
+
+.answer-icon span {
+    position: relative;
+    z-index: 1;
+
+    color: #3A3A3A;
+    font-family: Pretendard, sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1;
 }
 
 /* 페이지네이션 */
@@ -293,27 +283,39 @@
     justify-content: center;
     gap: 10px;
 
-    margin: 10px 0 0;
+    margin: 24px 0 10px;
 }
 
 .page-btn {
-    width: 32px;
-    height: 32px;
+    width: 30px;
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     border-radius: 8px;
-    border: none;
+    border: 2px solid transparent;
     background: #D5C9BB;
 
     color: #000;
     font-family: Pretendard, sans-serif;
     font-size: 15px;
     font-weight: 500;
+    line-height: 1;
 
     cursor: pointer;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 .page-btn.active {
-    background: #D5C9BB;
+    background: #9F907E;
+    color: #000;
+}
+
+.page-btn.active {
+    background: #9F907E;
     color: #000;
 }
 
@@ -333,8 +335,73 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    transform: translateY(-5px);
+    cursor: pointer;
+}
+
+/* 고민 작성하기 버튼 */
+.write-worry-button {
+    width: 370px;
+    height: 50px;
+    flex-shrink: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 20px;
+    background: #2B2D54;
+
+    text-decoration: none;
+    color: #FFF;
+    font-family: Pretendard, sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 150%;
+
+    margin: 0;
+    cursor: pointer;
+}
+
+.write-worry-button:hover {
+    background: #53546B;
+}
+
+.write-worry-button:visited,
+.write-worry-button:hover,
+.write-worry-button:active,
+.write-worry-button:focus {
+    text-decoration: none;
+    color: #FFF;
+}
+
+.worry-card.hidden {
+    display: none;
+}
+
+.bookmark-box form,
+.cheer-form {
+    margin: 0;
+    padding: 0;
+    position: relative;
+    z-index: 31;
+}
+
+.stamp-btn {
+    padding: 0;
+    margin: 0;
+
+    border: none;
+    outline: none;
+    background: transparent;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     cursor: pointer;
+    position: relative;
+    z-index: 31;
 }
 
 .empty-message {

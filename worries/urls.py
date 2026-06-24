@@ -14,4 +14,5 @@ urlpatterns = [
     path("hall_of_fame_card/<int:epilogue_id>", hall_of_fame_card, name="hall_of_fame_card"),
     path("post_answer/<int:worry_id>", post_answer, name="post_answer"),
     path("edit_satisfaction/<int:answer_id>/<int:is_satisfied>", edit_satisfaction, name="edit_satisfaction"),
+    path('postbox/', postbox, name='postbox'),
 ]

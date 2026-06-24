@@ -148,7 +148,6 @@
     cursor: default;
 }
 
-/* 고민 내용 스탬프 + 숫자 */
 .story-stamp-info {
     position: absolute;
     right: 31px;
@@ -163,8 +162,8 @@
 
 .cheerup {
     position: relative;
-    width: 32px;
-    height: 38px;
+    width: 20px;
+    height: 26px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -193,7 +192,6 @@
     line-height: 1;
 }
 
-/* 고민 답변 공감 업/다운 */
 .reaction-icons {
     position: absolute;
     right: 0;
@@ -231,17 +229,14 @@
     display: block;
 }
 
-/* 누르면 업 아이콘 빨강 */
 .up-btn.active {
     color: #AE4959;
 }
 
-/* 누르면 다운 아이콘 파랑 */
 .down-btn.active {
     color: #5B7DBE;
 }
 
-/* 후일담 눈 아이콘 */
 .eye-icon {
     position: absolute;
     right: 0;
@@ -295,4 +290,24 @@
     text-decoration: none;
     color: #FFF;
     outline: none;
+}
+
+.answer-list-btn {
+    display: flex;
+    width: 370px;
+    padding: 12px 16px;
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 20px;
+    background: #2B2D54;
+    text-decoration: none;
+    color: #FFF;
+    font-family: Pretendard;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 150%;
+    margin-top: 85px;
+    flex-shrink: 0;
 }

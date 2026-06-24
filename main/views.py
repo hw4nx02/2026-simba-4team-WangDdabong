@@ -182,6 +182,8 @@ def get_store(request):
         if success:
             profile.worry_count += 1
             profile.save()
+        else:
+            request.session["store_popup_message"] = "포인트가 부족해서 구매할 수 없어요."
             
         return redirect("main:get_store")
 
@@ -209,6 +211,7 @@ def get_store(request):
         "worry_count": profile.worry_count,
         "points": profile.points,
         "yangs": yang_items,
+        "store_popup_message": request.session.pop("store_popup_message", None),
     }
 
     return render(request, "main/demo_yang_store.html", context)
@@ -235,6 +238,7 @@ def post_buy_yang(request, yang_id):
     success = edit_points(profile, source, -yang["price"])
     
     if not success:
+        request.session["store_popup_message"] = "포인트가 부족해서 구매할 수 없어요."
         return redirect("main:get_store")
 
     user_yang = UserYang()

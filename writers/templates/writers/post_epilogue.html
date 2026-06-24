@@ -1,0 +1,63 @@
+<!-- 후일담 작성 화면 -->
+{% extends 'base_nav.html' %}
+{% load static %}
+
+{% block title %}후일담 작성{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/post_epilogue.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="write-section">
+        <h1 class="write-page-title">EPILOGUE</h1>
+
+        <form class="epilogue-form" method="post" action="{% url 'writers:post_epilogue' worry.id %}">
+                {% csrf_token %}
+
+                {% for answer_id in selected_answer_ids %}
+                <input type="hidden" name="answer_ids" value="{{ answer_id }}">
+                {% endfor %}
+
+                <div class="textfield">
+                        <textarea id="ep-han-madi" name="ep_han_madi" class="epilogue-keyword"
+                                placeholder="고민 답변자에게 줄 한마디를 작성해주세요!"></textarea>
+                </div>
+
+                <div class="textfield">
+                        <p class="question-title">
+                                고민 답변에 대한 후일담 작성
+                        </p>
+                        <input id="ep-title" name="ep_title" type="text" class="epilogue-title" placeholder="후일담 주제">
+                </div>
+
+                <div class="textfield">
+                        <textarea id="ep-content" name="ep_content" class="epilogue-content"
+                                placeholder="후일담 내용"></textarea>
+                </div>
+
+                <div class="open-field">
+                        <p class="question-title">
+                                명예의 전당 공개 여부
+                        </p>
+
+                        <div class="toggle-wrap">
+                                <!-- 체크 안 했을 때 False 전송 -->
+                                <input type="hidden" name="is_HoF" value="False">
+
+                                <label class="toggle">
+                                        <!-- 체크하면 True 전송 -->
+                                        <input type="checkbox" name="is_HoF" value="True">
+                                        <span class="slider"></span>
+                                </label>
+                        </div>
+                </div>
+
+                <button type="submit" class="submit-worry">
+                        후일담 제출하기
+                </button>
+        </form>
+</section>
+
+{% endblock %}

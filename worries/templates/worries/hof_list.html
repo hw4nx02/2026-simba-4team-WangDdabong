@@ -46,52 +46,49 @@
         {% for worry in hof_worries %}
         {% with epilogue=worry.epilogue %}
         <div class="hof-card">
-
-            {% if epilogue %}
             <a href="{% url 'worries:hall_of_fame_card' epilogue.id %}" class="hof-info">
-                {% else %}
-                <a href="#" class="hof-info">
-                    {% endif %}
-                    <div class="hof-worry-title">{{ worry.title }}</div>
-                    <div class="hof-worry-preview">{{ worry.content|truncatechars:16 }}</div>
-                    <div class="hof-worry-time">{{ worry.created_at|timesince }} 전</div>
-                </a>
+                <div class="hof-worry-title">{{ worry.title }}</div>
+                <div class="hof-worry-preview">{{ worry.content|truncatechars:16 }}</div>
+                <div class="hof-worry-time">{{ worry.created_at|timesince }} 전</div>
+            </a>
 
-                <form action="{% url 'worries:post_bookmark' worry.id %}" method="post" class="bookmark-form">
+            <form action="{% url 'writers:ep_bookmark' epilogue.id %}" method="post" class="bookmark-form">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                <button type="submit"
+                    class="bookmark-btn {% if request.user in epilogue.later_check.all %}active{% endif %}"
+                    aria-label="후일담 북마크">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="16" viewBox="0 0 12 16" fill="none">
+                        <path
+                            d="M0 1.5C0 0.671573 0.671573 0 1.5 0H10.5C11.3284 0 12 0.671573 12 1.5V14.4425C12 15.7697 10.4031 16.4431 9.45285 15.5165L7.04715 13.171C6.46459 12.603 5.53541 12.603 4.95285 13.171L2.54715 15.5165C1.59686 16.4431 0 15.7698 0 14.4425V1.5Z"
+                            fill="currentColor" />
+                    </svg>
+                </button>
+            </form>
+
+            <div class="hof-icons">
+                <form action="{% url 'worries:post_cheerup' worry.id %}" method="post" class="cheerup-form">
                     {% csrf_token %}
-                    <button type="submit" class="bookmark-btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="16" viewBox="0 0 12 16" fill="none">
-                            <path
-                                d="M0 1.5C0 0.671573 0.671573 0 1.5 0H10.5C11.3284 0 12 0.671573 12 1.5V14.4425C12 15.7697 10.4031 16.4431 9.45285 15.5165L7.04715 13.171C6.46459 12.603 5.53541 12.603 4.95285 13.171L2.54715 15.5165C1.59686 16.4431 0 15.7698 0 14.4425V1.5Z"
-                                fill="white" />
-                        </svg>
+                    <button type="submit" class="icon-btn">
+                        <div class="icon">
+                            <img class="cheerup" src="{% static 'images/cheerup.png' %}" alt="응원도장">
+                            <span class="icon-count">{{ worry.cheerup_count|default:0 }}</span>
+                        </div>
                     </button>
                 </form>
 
-                <div class="hof-icons">
-                    <form action="{% url 'worries:post_cheerup' worry.id %}" method="post" class="cheerup-form">
-                        {% csrf_token %}
-                        <button type="submit" class="icon-btn">
-                            <div class="icon">
-                                <img class="cheerup" src="{% static 'images/cheerup.png' %}" alt="응원도장">
-                                <span class="icon-count">{{ worry.cheerup_count|default:0 }}</span>
-                            </div>
-                        </button>
-                    </form>
-
-                    {% if epilogue %}
-                    <form action="{% url 'writers:post_epilogue_gonggam' epilogue.id %}" method="post"
-                        class="answer-form">
-                        {% csrf_token %}
-                        <button type="submit" class="icon-btn">
-                            <div class="icon">
-                                <img class="gonggam" src="{% static 'images/gonggam.png' %}" alt="공감도장">
-                                <span class="icon-count">{{ epilogue.ep_gonggam_count|default:0 }}</span>
-                            </div>
-                        </button>
-                    </form>
-                    {% endif %}
-                </div>
+                {% if epilogue %}
+                <form action="{% url 'writers:post_epilogue_gonggam' epilogue.id %}" method="post" class="answer-form">
+                    {% csrf_token %}
+                    <button type="submit" class="icon-btn">
+                        <div class="icon">
+                            <img class="gonggam" src="{% static 'images/gonggam.png' %}" alt="공감도장">
+                            <span class="icon-count">{{ epilogue.ep_gonggam_count|default:0 }}</span>
+                        </div>
+                    </button>
+                </form>
+                {% endif %}
+            </div>
         </div>
         {% endwith %}
         {% empty %}

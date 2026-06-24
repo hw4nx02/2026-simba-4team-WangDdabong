@@ -76,9 +76,9 @@
     <div class="hof-card-box">
         <div class="hof-card-header">
             {% if is_main %}
-            <img class="worryang1" src="../../static/images/worryang1.png" alt="어린양">
+            <img class="worryang3" src="../../static/images/worryang3.png" alt="워리양">
             {% else %}
-            <img class="worryang3" src="{% static 'images/worryang3.png' %}" alt="워리양">
+            <img class="worryang1" src="{% static 'images/worryang1.png' %}" alt="어린양">
             {% endif %}
 
             <a href="{% url 'worries:hall_of_fame' %}" class="hof-list-btn">리스트 보기</a>
@@ -156,11 +156,14 @@
                 <form action="{% url 'writers:ep_bookmark' epilogue.id %}" method="post" class="hof-form"
                     onclick="event.stopPropagation();">
                     {% csrf_token %}
-                    <button type="submit" class="hof-bookmark-btn">
+                    <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                    <button type="submit"
+                        class="hof-bookmark-btn {% if request.user in epilogue.later_check.all %}active{% endif %}"
+                        aria-label="후일담 북마크">
                         <svg xmlns="http://www.w3.org/2000/svg" width="21" height="32" viewBox="0 0 21 32" fill="none">
                             <path
                                 d="M0 2C0 0.895431 0.895431 0 2 0H19C20.1046 0 21 0.895431 21 2V27.2041C21 28.9813 18.8552 29.8757 17.5926 28.625L11.9074 22.994C11.128 22.222 9.87204 22.222 9.09257 22.994L3.40743 28.625C2.14477 29.8757 0 28.9813 0 27.2041V2Z"
-                                fill="white" />
+                                fill="currentColor" />
                         </svg>
                     </button>
                 </form>

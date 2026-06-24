@@ -45,7 +45,7 @@
 
     <form action="{% url 'main:get_store' %}" method="post" class="worry-buy-form">
         {% csrf_token %}
-        <button type="submit" class="worry-buy" data-item="worry_buy">
+        <button type="submit" class="worry-buy" data-item="worry_buy" data-price="5">
             <div class="worry-buy-icon">
                 <div class="icon-bubble">
                     <svg xmlns="http://www.w3.org/2000/svg" width="36" height="34" viewBox="0 0 36 34" fill="none">
@@ -63,7 +63,8 @@
 
     {% for yang in yangs %}
     {% if yang.id != 'new_yang' %}
-    <div class="yang-buy {% if yang.is_owned %}owned{% endif %}" data-item="{{ yang.id }}">
+    <div class="yang-buy {% if yang.is_owned %}owned{% endif %}" data-item="{{ yang.id }}"
+        data-price="{{ yang.price }}">
         <div class="yang-buy-info">
             <div class="yang-buy-name">
                 <span class="lock">
@@ -107,24 +108,90 @@
 
     <button type="button" class="buy-btn" id="store-buy-btn" disabled>구매하기</button>
 
+    <div class="store-popup-overlay {% if store_popup_message %}show{% endif %}" id="store-popup"
+        aria-hidden="{% if store_popup_message %}false{% else %}true{% endif %}">
+        <div class="store-popup" role="dialog" aria-modal="true" aria-labelledby="store-popup-title">
+            <div class="store-popup-title" id="store-popup-title">구매할 수 없어요</div>
+            <div class="store-popup-message" id="store-popup-message">
+                {{ store_popup_message|default:"포인트가 부족해서 구매할 수 없어요." }}
+            </div>
+            <button type="button" class="store-popup-close" id="store-popup-close">확인</button>
+        </div>
+    </div>
+
 </main>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const items = document.querySelectorAll('.yang-buy:not(.owned)');
+        const worryBuyForm = document.querySelector('.worry-buy-form');
+        const worryBuyButton = document.querySelector('.worry-buy');
         const buyBtn = document.getElementById('store-buy-btn');
         const submitForm = document.getElementById('yang-buy-submit-form');
+        const popup = document.getElementById('store-popup');
+        const popupMessage = document.getElementById('store-popup-message');
+        const popupClose = document.getElementById('store-popup-close');
+        const currentPoints = Number('{{ profile.points|default:0 }}');
         let selectedItem = null;
         let selectedYangId = null;
+        let selectedYangPrice = 0;
 
         const buyUrlBase = "{% url 'main:post_buy_yang' 'YANG_ID_PLACEHOLDER' %}";
 
+        function openPopup(message) {
+            popupMessage.textContent = message;
+            popup.classList.add('show');
+            popup.setAttribute('aria-hidden', 'false');
+        }
+
+        function closePopup() {
+            popup.classList.remove('show');
+            popup.setAttribute('aria-hidden', 'true');
+        }
+
+        function isAffordable(price) {
+            return currentPoints >= Number(price);
+        }
+
+        popupClose.addEventListener('click', closePopup);
+        popup.addEventListener('click', function (event) {
+            if (event.target === popup) {
+                closePopup();
+            }
+        });
+
+        if (worryBuyForm && worryBuyButton) {
+            worryBuyForm.addEventListener('submit', function (event) {
+                const price = Number(worryBuyButton.dataset.price);
+
+                if (!isAffordable(price)) {
+                    event.preventDefault();
+                    openPopup('포인트가 부족해서 구매할 수 없어요.');
+                }
+            });
+        }
+
         items.forEach(function (item) {
             item.addEventListener('click', function () {
+                const price = Number(item.dataset.price);
+
+                if (!isAffordable(price)) {
+                    item.classList.remove('selected');
+                    if (selectedItem === item) {
+                        selectedItem = null;
+                        selectedYangId = null;
+                        selectedYangPrice = 0;
+                        buyBtn.disabled = true;
+                    }
+                    openPopup('포인트가 부족해서 구매할 수 없어요.');
+                    return;
+                }
+
                 if (selectedItem === item) {
                     item.classList.remove('selected');
                     selectedItem = null;
                     selectedYangId = null;
+                    selectedYangPrice = 0;
                 } else {
                     if (selectedItem) {
                         selectedItem.classList.remove('selected');
@@ -132,6 +199,7 @@
                     item.classList.add('selected');
                     selectedItem = item;
                     selectedYangId = item.dataset.item;
+                    selectedYangPrice = price;
                 }
 
                 buyBtn.disabled = !selectedItem;
@@ -140,6 +208,12 @@
 
         buyBtn.addEventListener('click', function () {
             if (!selectedYangId) return;
+
+            if (!isAffordable(selectedYangPrice)) {
+                openPopup('포인트가 부족해서 구매할 수 없어요.');
+                return;
+            }
+
             submitForm.action = buyUrlBase.replace('YANG_ID_PLACEHOLDER', selectedYangId);
             submitForm.submit();
         });

@@ -212,6 +212,18 @@
     align-items: center;
 }
 
+.hof-bookmark-btn {
+    color: #FFFFFF;
+}
+
+.hof-bookmark-btn.active {
+    color: #AE4959;
+}
+
+.hof-bookmark-btn svg path {
+    fill: currentColor;
+}
+
 .icon {
     display: flex;
     flex-direction: row;

@@ -22,7 +22,7 @@
                     font-weight="1000" font-family="Pretendard, sans-serif">?</text>
             </svg>
 
-            <span class="top-info-count">{{ worry_count }}</span>
+            <span class="top-info-count">{{ worry_count|default:0 }}</span>
         </span>
 
         <span class="top-info-box">
@@ -38,7 +38,7 @@
                     stroke-linecap="round" />
             </svg>
 
-            <span class="top-info-count">{{ points }}</span>
+            <span class="top-info-count">{{ points|default:0 }}</span>
         </span>
     </div>
 

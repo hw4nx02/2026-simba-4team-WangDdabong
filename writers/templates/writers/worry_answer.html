@@ -99,7 +99,8 @@
                     <div class="reaction-icons">
 
                          <!-- 만족 -->
-                         <form method="post" action="{% url 'worries:edit_satisfaction' ans.id 1 %}" class="reaction-form">
+                         <form method="post" action="{% url 'worries:edit_satisfaction' ans.id 1 %}"
+                              class="reaction-form">
                               {% csrf_token %}
 
                               <button type="submit"
@@ -118,7 +119,8 @@
                          </form>
 
                          <!-- 불만족 -->
-                         <form method="post" action="{% url 'worries:edit_satisfaction' ans.id 0 %}" class="reaction-form">
+                         <form method="post" action="{% url 'worries:edit_satisfaction' ans.id 0 %}"
+                              class="reaction-form">
                               {% csrf_token %}
 
                               <button type="submit"
@@ -145,9 +147,9 @@
           </div>
      </div>
 
-     <a href="{% url 'writers:post_epilogue' worry.id %}" class="submit-btn">
+     <button type="submit" form="epilogue-form" class="submit-btn">
           후일담 작성하기
-     </a>
+     </button>
 
 </section>
 

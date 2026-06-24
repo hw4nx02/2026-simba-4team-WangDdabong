@@ -160,12 +160,12 @@
 
 .hof-worry-time {
     position: absolute;
-    right: 170px;
-    bottom: 7px;
+    right: 166px;
+    bottom: 5px;
 
     color: #868484;
     font-family: Pretendard, sans-serif;
-    font-size: 10px;
+    font-size: 8px;
     font-style: normal;
     font-weight: 400;
     line-height: 150%;
@@ -194,11 +194,20 @@
 
     flex-shrink: 0;
     cursor: pointer;
+    color: #FFFFFF;
 }
 
 .bookmark-btn svg {
     width: 12px;
     height: 16px;
+}
+
+.bookmark-btn.active {
+    color: #AE4959;
+}
+
+.bookmark-btn svg path {
+    fill: currentColor;
 }
 
 .hof-icons {

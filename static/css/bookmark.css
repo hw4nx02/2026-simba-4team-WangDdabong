@@ -137,6 +137,7 @@
     padding: 0 15px;
     height: 80px;
     position: relative;
+    flex-shrink: 0;
 }
 
 .bookmark-info {
@@ -165,7 +166,7 @@
     font-weight: 400;
     color: #868484;
     line-height: 150%;
-        text-decoration: none;
+    text-decoration: none;
 
 }
 

@@ -87,22 +87,19 @@
     line-height: 120%;
 }
 
-/* 리스트 */
+
 .reply-list-wrap {
     width: 370px;
-    flex: 1;
-    min-height: 0;
+    height: 482px;
+    flex: 0 0 482px;
+    min-height: 482px;
+    max-height: 482px;
 
     display: flex;
     flex-direction: column;
     gap: 10px;
-
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding-bottom: 4px;
-
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    overflow: hidden;
+    padding-bottom: 0;
 }
 
 .reply-list-wrap::-webkit-scrollbar {
@@ -284,7 +281,6 @@
     color: #5B7DBE;
 }
 
-/* 페이지네이션 */
 .pagination {
     flex-shrink: 0;
 
@@ -293,27 +289,33 @@
     justify-content: center;
     gap: 10px;
 
-    margin: 10px 0 0;
+    margin: 24px 0 10px;
 }
 
 .page-btn {
-    width: 32px;
-    height: 32px;
+    width: 30px;
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     border-radius: 8px;
-    border: none;
+    border: 2px solid transparent;
     background: #D5C9BB;
 
     color: #000;
     font-family: Pretendard, sans-serif;
     font-size: 15px;
     font-weight: 500;
+    line-height: 1;
 
     cursor: pointer;
+    padding: 0;
 }
 
 .page-btn.active {
-    background: #D5C9BB;
+    background: #9F907E;
     color: #000;
 }
 
@@ -333,7 +335,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
+    transform: translateY(-5px);
     cursor: pointer;
 }
 
@@ -343,4 +345,8 @@
     font-size: 13px;
     text-align: center;
     margin-top: 40px;
+}
+
+.hidden-card {
+    display: none;
 }

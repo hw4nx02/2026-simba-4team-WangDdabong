@@ -4,6 +4,23 @@ from accounts.models import Profile
 from .models import *
 from main.utils import get_time_ago, edit_points
 
+
+def get_matching_mbti_patterns(mbti):
+    mbti = (mbti or "").upper()
+
+    if len(mbti) != 4:
+        return [mbti]
+
+    patterns = [""]
+    for letter in mbti:
+        patterns = [
+            pattern + candidate
+            for pattern in patterns
+            for candidate in (letter, "X")
+        ]
+
+    return patterns
+
 """
 [고민 작성]
 - 기능: 작성한 내용으로 Worry 객체 생성 및 저장
@@ -27,7 +44,7 @@ def post_worry(request):
         new_worry.keyword = request.POST["keyword"]
         new_worry.title = request.POST["title"]
         new_worry.content = request.POST["content"]
-        new_worry.mbti = request.POST["mbti"]
+        new_worry.mbti = request.POST["mbti"].upper()
 
         new_worry.save()
 
@@ -63,9 +80,11 @@ def get_worries(request):
     if page < 1:
         page = 1
 
+    matching_mbti_patterns = get_matching_mbti_patterns(profile.mbti)
+
     # 고민 리스트 조회
     worries = Worry.objects.filter(
-        mbti=profile.mbti,
+        mbti__in=matching_mbti_patterns,
         is_delete=False
     ).order_by("-pub_date")
 

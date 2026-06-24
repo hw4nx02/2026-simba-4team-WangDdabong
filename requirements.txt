@@ -1,5 +1,11 @@
 asgiref==3.11.1
 Django==6.0.5
+gunicorn==26.0.0
+mysqlclient==2.2.8
+packaging==26.2
 pillow==12.2.0
+psycopg==3.3.4
+psycopg-binary==3.3.4
 sqlparse==0.5.5
 tzdata==2026.2
+whitenoise==6.12.0
